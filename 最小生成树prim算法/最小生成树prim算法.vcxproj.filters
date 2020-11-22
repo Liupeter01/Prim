@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="图的数据结构%28matrix%29">
+      <UniqueIdentifier>{b100cec1-6a76-4a3d-ac46-a8b1c0dd8f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="图的数据结构%28matrix%29\头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="图的数据结构%28matrix%29\源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="prim算法">
+      <UniqueIdentifier>{e2d65a42-41f9-4f4b-8577-5da1936fb982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="prim算法\源文件">
+      <UniqueIdentifier>{c40ac80e-a873-47be-9e57-962cd45a1a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="prim算法\头文件">
+      <UniqueIdentifier>{82161883-601d-4509-86e5-b19d4089a5dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c">
+      <Filter>图的数据结构%28matrix%29\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MGraph.c">
+      <Filter>图的数据结构%28matrix%29\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectedEdge.c">
+      <Filter>图的数据结构%28matrix%29\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UnDirectedEdge.c">
+      <Filter>图的数据结构%28matrix%29\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="prim.c">
+      <Filter>prim算法\源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MGraph.h">
+      <Filter>图的数据结构%28matrix%29\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectedEdge.h">
+      <Filter>图的数据结构%28matrix%29\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UnDirectedEdge.h">
+      <Filter>图的数据结构%28matrix%29\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="prim.h">
+      <Filter>prim算法\头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
