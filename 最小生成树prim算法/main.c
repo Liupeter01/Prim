@@ -9,12 +9,12 @@ int main()
           InitGraph(&Graph);         //初始化
 
           /*顶点列表批量添加*/
-          VertexType arr[] = { "ABCDE" };
+          VertexType arr[] = { "ABCDEFG" };
           CreateBatchVertex(&Graph, arr, GRAPHWITHVALUE);      //顶点列表批量添加
 
-          VertexType arr1[] = "AAABCC";
-          VertexType arr2[] = "BCECDE";
-          int distance[] = { 3,1,4,2,5,6 };                 //距离设置数组
+          VertexType arr1[] = "AAABBCGGFEE";
+          VertexType arr2[] = "BGFCGDFDDFD";
+          int distance[] = { 18,18,19,8,20,20,15,15,16,3,9 };                 //距离设置数组
 
           for (int i = 0; i < (int)strlen(arr1); ++i)
           {

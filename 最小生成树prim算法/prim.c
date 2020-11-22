@@ -49,7 +49,7 @@ void Prim(MGraph G, VertexType StartVertex)	  //确定需要访问的顶点并生成prim生成
 		  /*进入循环判断，需要prim最小生成树中顶点集合V(G)必须全部被访问*/
 		  while (!JudgeFlag(G, flag))	//辅助标记数组，用于判断当前是否还有没有访问的顶点
 		  {
-					int ShortestEdge = 0x7FFFFFFF;   //记录边的权，初始化为不连通的状态
+					unsigned int ShortestEdge = INFINITYSIZE;   //记录边的权，初始化为不连通的状态
 					int EndPos = 0;		 //记录终点坐标，用于连接
 					int StartPos = 0;				 //记录起点坐标
 					for (int i = 0; i < G.vexnum; ++i) 
@@ -61,7 +61,7 @@ void Prim(MGraph G, VertexType StartVertex)	  //确定需要访问的顶点并生成prim生成
 												  if (!flag[endpos])			 //该顶点没被访问，属于集合V-V_T
 												  {
 															if (G.Edge[i][endpos] != -1 && G.Edge[i][endpos] != INFINITYSIZE &&
-																	  ShortestEdge > G.Edge[i][endpos] )		//选择排序找权最小的
+																	  ShortestEdge >= G.Edge[i][endpos] )		//选择排序找权最小的
 															{	
 																	  ShortestEdge = G.Edge[i][endpos];
 																	  EndPos = endpos; //记录V-V_T中的顶点
@@ -85,7 +85,7 @@ void Prim(MGraph G, VertexType StartVertex)	  //确定需要访问的顶点并生成prim生成
 												  if (min_weight[i])  //不为0
 												  {
 															//源点到其他顶点距离小于顶点已经访问过的到其他顶点的距离
-															if (min_weight[i] > G.Edge[alreadyvisit][i])
+															if (min_weight[i] >= G.Edge[alreadyvisit][i])
 															{
 																	  min_weight[i] = G.Edge[alreadyvisit][i];
 															}
