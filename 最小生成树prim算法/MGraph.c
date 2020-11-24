@@ -37,18 +37,18 @@ int LocateVertex(MGraph G, VertexType x)   //ÔÚÍ¼GÖÐÕÒµ½¶¥µãÏÂ±ê
 
 void DisplayGraph(MGraph G)             //Í¼GµÄÊä³ö
 {
-          printf("   ");                 //¿Õ¸ñ¶ÔÆë
+          printf("    ");                 //¿Õ¸ñ¶ÔÆë
           for (int i = 0; i < G.vexnum; ++i)                //Êä³ö¶¥µã
           {
-                    printf("%c  ", G.Vex[i]);
+                    printf("%-4c  ", G.Vex[i]);
           }
           printf("\n");
           for (int i = 0; i < G.vexnum; ++i)                //Êä³öÊý¾Ý
           {
-                    printf("%c  ", G.Vex[i]);
+                    printf("%c:  ", G.Vex[i]);
                     for (int j = 0; j < G.vexnum; ++j)
                     {
-                              printf("%d  ", G.Edge[i][j]);
+                              printf("%-4d  ", G.Edge[i][j]);
                     }
                     printf("\n");
           }
@@ -77,6 +77,13 @@ BOOL ExtendGraphSize(MGraph* G,VertexType*arr, int type)                //Í¼GµÄ¿
                     memset(G->Edge[i], ((type == NORMALGRAPH) ? 0 : INFINITYSIZE), sizeof(EdgeType) * GraphSize);  //È«²¿³õÊ¼»¯Îª0
           }
           G->MaxVertexNum = GraphSize;         //À©Õ¹×î´óÈÝÁ¿
+          if (type != NORMALGRAPH)         //Èç¹û¸ÃÍ¼ÊÇÒ»¸ö´øÈ¨Í¼£¬Ôò½«ËùÓÐµÄ¶Ô½ÇÏßÇå¿ÕÎª0
+          {
+                    for (int i = 0; i < G->MaxVertexNum; ++i)
+                    {
+                              G->Edge[i][i] = 0;  //¶Ô½ÇÏßÎª0
+                    }
+          }
           return TRUE;
 }
 

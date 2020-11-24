@@ -58,10 +58,11 @@ void Prim(MGraph G, VertexType StartVertex)	  //确定需要访问的顶点并生成prim生成
 							  {
 										for (int endpos = 0; endpos < G.vexnum; ++endpos)
 										{
-												  if (!flag[endpos])			 //该顶点没被访问，属于集合V-V_T
+												  //该顶点没被访问，属于集合V-V_T
+												  //且该顶点不应该位于对角线上(不为0)
+												  if (!flag[endpos] && G.Edge[i][endpos])
 												  {
-															if (G.Edge[i][endpos] != -1 && G.Edge[i][endpos] != INFINITYSIZE &&
-																	  ShortestEdge >= G.Edge[i][endpos] )		//选择排序找权最小的
+															if (G.Edge[i][endpos] != -1 &&ShortestEdge >= G.Edge[i][endpos] )		//选择排序找权最小的
 															{	
 																	  ShortestEdge = G.Edge[i][endpos];
 																	  EndPos = endpos; //记录V-V_T中的顶点
@@ -82,7 +83,9 @@ void Prim(MGraph G, VertexType StartVertex)	  //确定需要访问的顶点并生成prim生成
 							  {
 										for (int i = 0; i < G.vexnum; ++i)
 										{
-												  if (min_weight[i])  //不为0
+												  //辅助距离数组的长度不为0(被访问过了)
+												   //且该顶点不应该位于对角线上(不为0)
+												  if (min_weight[i] && G.Edge[alreadyvisit][i]) 
 												  {
 															//源点到其他顶点距离小于顶点已经访问过的到其他顶点的距离
 															if (min_weight[i] >= G.Edge[alreadyvisit][i])
