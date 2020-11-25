@@ -212,7 +212,10 @@ int FindFirstNeighbor(MGraph G, VertexType x)              //ÔÚÍ¼ÖĞÑ°ÕÒÄ³Ò»¸ö¶¥µ
           {
                     for (TheFirst = 0; TheFirst < G.MaxVertexNum; ++TheFirst)
                     {
-                              if (G.Edge[x_pos][TheFirst] != 0 && G.Edge[x_pos][TheFirst] != INFINITYSIZE) //²»ÊÇ×ÔÉíÇÒ±ØĞëÁ¬Í¨
+                              //ĞŞ¸ÄÎª-1µÄÔ­ÒòINT_MAX»á±»½âÎöÎªÎŞ·ûºÅÊı£¬Òò´ËÔÚÕâÀïÒÔ-1½øĞĞÅĞ¶Ï
+                              if (G.Edge[x_pos][TheFirst] != 0 && \
+                                        G.Edge[x_pos][TheFirst] != -1 &&\
+                                        G.Edge[x_pos][TheFirst] != INFINITYSIZE) //²»ÊÇ×ÔÉíÇÒ±ØĞëÁ¬Í¨
                               {
                                         flag = 1;
                                         break;
@@ -233,7 +236,9 @@ int FindNextNeighbor(MGraph G, VertexType x, VertexType y)          //ÔÚÍ¼ÖĞÑ°ÕÒ
           {
                     for (TheNext = y_pos + 1; TheNext < G.MaxVertexNum; ++TheNext)
                     {
-                              if (G.Edge[x_pos][TheNext] != 0 && G.Edge[x_pos][TheNext] != INFINITYSIZE) //²»ÊÇ×ÔÉíÇÒ±ØĞëÁ¬Í¨
+                              if (G.Edge[x_pos][TheNext] != 0 && \
+                                        G.Edge[x_pos][TheNext] !=-1 && \
+                                        G.Edge[x_pos][TheNext] != INFINITYSIZE) //²»ÊÇ×ÔÉíÇÒ±ØĞëÁ¬Í¨
                               {
                                         flag = 1;
                                         break;
