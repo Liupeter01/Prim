@@ -27,7 +27,7 @@ int LocateVertex(MGraph G, VertexType x)   //ÔÚÍ¼GÖĞÕÒµ½¶¥µãÏÂ±ê
           int x_pos = 0;
           for (x_pos; x_pos < G.MaxVertexNum; ++x_pos)
           {
-                    if (G.Vex[x_pos] == x && G.Vex[x_pos]!=0)
+                    if (G.Vex[x_pos] != 0 && G.Vex[x_pos] == x)
                     {
                               return x_pos;
                     }
@@ -57,6 +57,7 @@ void DisplayGraph(MGraph G)             //Í¼GµÄÊä³ö
 
 BOOL ExtendGraphSize(MGraph* G,VertexType*arr, int type)                //Í¼GµÄ¿Õ¼ä·ÖÅäÒÔ¼°Ä¬ÈÏ¿Õ¼äÀ©Èİº¯Êı
 {
+          G->EdgeValue = ((type == GRAPHWITHVALUE) ? TRUE : FALSE);   //ÇĞ»»Í¼µÄ×´Ì¬£¬ÅĞ¶Ïµ±Ç°ÊÇ·ñÎª´øÈ¨Í¼
           int GraphSize = (((int)strlen(arr) > G->MaxVertexNum) ? (int)strlen(arr) : G->MaxVertexNum);//Í¼µÄ´óĞ¡£¬¶¥µãÊı¶àÓÚÄ¬ÈÏ¿Õ¼äÊı
           G->Vex = (VertexType*)calloc(GraphSize, sizeof(VertexType));
           G->Edge = (EdgeType**)calloc(GraphSize, sizeof(EdgeType*));         //À©Èİ
@@ -94,7 +95,9 @@ void ShowEdgeValue(MGraph G, VertexType x, VertexType y)    //Êä³öÍ¼ÖĞÄ³Ìõ±ßµÄÈ¨
 
           if (x_pos != -1 && y_pos != -1)                   //Á½¸ö¶¥µã±ØĞëÊÇ´æÔÚµÄ
           {
-                    if (G.Edge[x_pos][y_pos] == 0 || G.Edge[x_pos][y_pos] == INFINITYSIZE)
+                    if (G.Edge[x_pos][y_pos] == 0 ||                  //¼ì²â¶Ô½ÇÏß
+                              G.Edge[x_pos][y_pos] == -1 ||            //ÎªÁË±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                              G.Edge[x_pos][y_pos] == INFINITYSIZE)
                     {
                               printf("±ß%c%c²»´æÔÚ\n", x, y);
                     }
@@ -102,7 +105,9 @@ void ShowEdgeValue(MGraph G, VertexType x, VertexType y)    //Êä³öÍ¼ÖĞÄ³Ìõ±ßµÄÈ¨
                     {
                               printf("¸Ã±ßÊ¹ÓÃÎŞÈ¨Í¼µÄÄ¬ÈÏÈ¨Öµ1\n");
                     }
-                    else
+                    else if(G.Edge[x_pos][y_pos] != 0 &&                  //¼ì²â¶Ô½ÇÏß
+                              G.Edge[x_pos][y_pos] != -1 &&            //ÎªÁË±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                              G.Edge[x_pos][y_pos] != INFINITYSIZE)
                     {
                               printf("±ß%c%cµÄÈ¨ÖµÎª£º%d\n", x, y, G.Edge[x_pos][y_pos]);
                     }
@@ -115,7 +120,6 @@ void ShowEdgeValue(MGraph G, VertexType x, VertexType y)    //Êä³öÍ¼ÖĞÄ³Ìõ±ßµÄÈ¨
 
 BOOL InsertEdge(MGraph* G, VertexType x, VertexType y, int Edge_Value, int Type)
 {
-          G->EdgeValue = ((Edge_Value == 1) ? FALSE : TRUE);         //È¨ÖµÉè¶¨
           int x_pos = LocateVertex(*G, x);
           int y_pos = LocateVertex(*G, y);     //xºÍyµÄÎ»ÖÃ
           if (x_pos != -1 && y_pos != -1)                   //Á½¸ö¶¥µã±ØĞë´æÔÚ
@@ -138,20 +142,22 @@ BOOL RemoveEdge(MGraph* G, VertexType x, VertexType y, int Value, int Type)     
 {
           int x_pos = LocateVertex(*G, x);
           int y_pos = LocateVertex(*G, y);     //xºÍyµÄÎ»ÖÃ
-
           if (x_pos != -1 && y_pos != -1)                   //Á½¸ö¶¥µã±ØĞë´æÔÚ
           {
-                    if (Type == DIRECTEDGRAPH)     //ÓĞÏòÍ¼
+                    if (x_pos != y_pos)           //µ±Ç°Á½¸öÍ¼²Ù×÷µÄÎª¶Ô½ÇÏß
                     {
-                              G->Edge[x_pos][y_pos] = Value;          //0»ò·ÇÁ¬Í¨×´Ì¬
+                              if (Type == DIRECTEDGRAPH)     //ÓĞÏòÍ¼
+                              {
+                                        G->Edge[x_pos][y_pos] = Value;          //0»ò·ÇÁ¬Í¨×´Ì¬
+                              }
+                              else if (Type == UNDIRECTEDGRAPH)       //ÎŞÏòÍ¼
+                              {
+                                        G->Edge[x_pos][y_pos] = Value;  //0»ò·ÇÁ¬Í¨×´Ì¬
+                                        G->Edge[y_pos][x_pos] = Value; //0»ò·ÇÁ¬Í¨×´Ì¬
+                              }
+                              G->arcnum--;        //±ßÊı×ÔÔö
+                              return TRUE;
                     }
-                    else if (Type == UNDIRECTEDGRAPH)       //ÎŞÏòÍ¼
-                    {
-                              G->Edge[x_pos][y_pos] = Value;  //0»ò·ÇÁ¬Í¨×´Ì¬
-                              G->Edge[y_pos][x_pos] = Value; //0»ò·ÇÁ¬Í¨×´Ì¬
-                    }
-                    G->arcnum--;        //±ßÊı×ÔÔö
-                    return TRUE;
           }
           return FALSE;       //²åÈëÊ§°Ü
 }
@@ -212,10 +218,9 @@ int FindFirstNeighbor(MGraph G, VertexType x)              //ÔÚÍ¼ÖĞÑ°ÕÒÄ³Ò»¸ö¶¥µ
           {
                     for (TheFirst = 0; TheFirst < G.MaxVertexNum; ++TheFirst)
                     {
-                              //ĞŞ¸ÄÎª-1µÄÔ­ÒòINT_MAX»á±»½âÎöÎªÎŞ·ûºÅÊı£¬Òò´ËÔÚÕâÀïÒÔ-1½øĞĞÅĞ¶Ï
-                              if (G.Edge[x_pos][TheFirst] != 0 && \
-                                        G.Edge[x_pos][TheFirst] != -1 &&\
-                                        G.Edge[x_pos][TheFirst] != INFINITYSIZE) //²»ÊÇ×ÔÉíÇÒ±ØĞëÁ¬Í¨
+                              if (G.Edge[x_pos][TheFirst] != 0 &&               //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß
+                                        G.Edge[x_pos][TheFirst] != -1 &&         //ÎªÁË±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[x_pos][TheFirst] != INFINITYSIZE) 
                               {
                                         flag = 1;
                                         break;
@@ -236,8 +241,8 @@ int FindNextNeighbor(MGraph G, VertexType x, VertexType y)          //ÔÚÍ¼ÖĞÑ°ÕÒ
           {
                     for (TheNext = y_pos + 1; TheNext < G.MaxVertexNum; ++TheNext)
                     {
-                              if (G.Edge[x_pos][TheNext] != 0 && \
-                                        G.Edge[x_pos][TheNext] !=-1 && \
+                              if (G.Edge[x_pos][TheNext] != 0 &&               //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß
+                                        G.Edge[x_pos][TheNext] !=-1 &&        //ÎªÁË±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
                                         G.Edge[x_pos][TheNext] != INFINITYSIZE) //²»ÊÇ×ÔÉíÇÒ±ØĞëÁ¬Í¨
                               {
                                         flag = 1;

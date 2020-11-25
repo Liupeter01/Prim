@@ -4,7 +4,14 @@ BOOL IsDirectEdgeExist(MGraph G, VertexType x, VertexType y)		  //ÅĞ¶ÏÔÚÍ¼GÖĞÊÇ·
 {
           int x_pos = LocateVertex(G, x);
           int y_pos = LocateVertex(G, y);
-          return  ((x_pos != -1 && y_pos != -1 &&G.Edge[x_pos][y_pos] != 0 && G.Edge[x_pos][y_pos] != INFINITYSIZE) ? TRUE : FALSE);
+          if (x_pos != -1 && y_pos != -1)
+          {
+                    return  (
+                              (G.Edge[x_pos][y_pos] != 0 &&                          //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß
+                              G.Edge[x_pos][y_pos] != -1 &&                         //ÎªÁË±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                              G.Edge[x_pos][y_pos] != INFINITYSIZE) ? TRUE : FALSE);
+          }
+          return FALSE;
 }
 
 void DisplayDirectNeighbors(MGraph G, VertexType x)         //Êä³öÔÚÓĞÏòÍ¼GÓë½áµãxÏàÁÚ±ß<x,?>
@@ -14,11 +21,15 @@ void DisplayDirectNeighbors(MGraph G, VertexType x)         //Êä³öÔÚÓĞÏòÍ¼GÓë½áµ
           {
                     for (int i = 0; i < G.MaxVertexNum; ++i)
                     {
-                              if (G.Edge[x_pos][i] != 0 && G.Edge[x_pos][i] != INFINITYSIZE)
+                              if (G.Edge[x_pos][i] != 0 &&            //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß  
+                                        G.Edge[x_pos][i] != -1 &&     //±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[x_pos][i] != INFINITYSIZE)
                               {
                                         printf("ÓĞÏò±ß³ö±ß<%c,%c>\n", x, G.Vex[i]);
                               }
-                              if (G.Edge[i][x_pos] != 0 && G.Edge[i][x_pos] !=INFINITYSIZE)
+                              if (G.Edge[i][x_pos] != 0 &&             //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß  
+                                        G.Edge[i][x_pos] != -1 &&     //±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[i][x_pos] !=INFINITYSIZE)
                               {
                                         printf("ÓĞÏò±ßÈë±ß<%c,%c>\n", G.Vex[i], x);
                               }
@@ -34,7 +45,9 @@ int CalculateEnVertex(MGraph G, VertexType x)		//¼ÆËãÄ³Ò»¸ö¶¥µãµÄÈë¶ÈÊıÁ¿
                     int counter = 0;
                     for (int i = 0; i < G.vexnum; ++i)
                     {
-                              if (G.Edge[i][LocateVertex(G, x)] != 0 && G.Edge[i][LocateVertex(G, x)] != INFINITYSIZE)      //ÒÔÁĞÎªµ¥Î»½øĞĞ±éÀú
+                              if (G.Edge[i][LocateVertex(G, x)] != 0 &&          //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß  
+                                        G.Edge[i][LocateVertex(G,x)]!=-1 &&       //±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[i][LocateVertex(G, x)] != INFINITYSIZE)      //ÒÔÁĞÎªµ¥Î»½øĞĞ±éÀú
                               {
                                         counter++;
                               }
@@ -52,7 +65,9 @@ int CalculateOutVertex(MGraph G, VertexType x)			//¼ÆËãÄ³Ò»¸ö¶¥µãµÄ³ö¶ÈÊıÁ¿
                     int counter = 0;
                     for (int i = 0; i < G.vexnum; ++i)
                     {
-                              if (G.Edge[LocateVertex(G, x)][i] != 0 && G.Edge[LocateVertex(G, x)][i] != INFINITYSIZE)      //ÒÔÁĞÎªµ¥Î»½øĞĞ±éÀú
+                              if (G.Edge[LocateVertex(G, x)][i] != 0 &&         //ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß  
+                                        G.Edge[LocateVertex(G, x)][i] != -1 &&  //±ÜÃâINT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[LocateVertex(G, x)][i] != INFINITYSIZE)      //ÒÔÁĞÎªµ¥Î»½øĞĞ±éÀú
                               {
                                         counter++;
                               }

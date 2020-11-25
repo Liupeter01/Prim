@@ -4,8 +4,17 @@ BOOL  IsUnDirectEdgeExist(MGraph G, VertexType x, VertexType y)		   //ÅĞ¶ÏÔÚÍ¼GÖ
 {
           int x_pos = LocateVertex(G, x);
           int y_pos = LocateVertex(G, y);
-          return  ((x_pos != -1 && y_pos != -1 && G.Edge[x_pos][y_pos] != 0 && G.Edge[x_pos][y_pos] != INFINITYSIZE &&
-                    G.Edge[y_pos][x_pos] != 0 && G.Edge[y_pos][x_pos] != INFINITYSIZE) ? TRUE : FALSE);
+          if (x_pos != -1 && y_pos != -1)
+          {
+                    return  (
+                              (         G.Edge[x_pos][y_pos] != 0 &&           //¼ì²â×ø±ê(x,y)ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß
+                                        G.Edge[x_pos][y_pos] != -1 &&              //ÎªÁË±ÜÃâ(x,y) INT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[x_pos][y_pos] != INFINITYSIZE &&
+                                        G.Edge[y_pos][x_pos] != 0 &&              //¼ì²â×ø±ê(y,x)ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß
+                                        G.Edge[y_pos][x_pos] != -1 &&               //ÎªÁË±ÜÃâ(y,x) INT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[y_pos][x_pos] != INFINITYSIZE) ? TRUE : FALSE);
+          }
+          return FALSE;
 }
 
 void DisplayUnDirectNeighbors(MGraph G, VertexType x) //Êä³öÔÚÓĞÏòÍ¼GÓë½áµãxÏàÁÚ±ß(x,?)
@@ -15,7 +24,9 @@ void DisplayUnDirectNeighbors(MGraph G, VertexType x) //Êä³öÔÚÓĞÏòÍ¼GÓë½áµãxÏàÁÚ
           {
                     for (int i = 0; i < G.MaxVertexNum; ++i)
                     {
-                              if (G.Edge[x_pos][i] != 0 && G.Edge[x_pos][i] != INFINITYSIZE)
+                              if (G.Edge[x_pos][i] != 0 &&   //¼ì²â×ø±ê(x,y)ÅĞ¶Ï²éÕÒÔªËØÊÇ·ñÎ»ÓÚ¶Ô½ÇÏß
+                                        G.Edge[x_pos][i] != -1 &&       //ÎªÁË±ÜÃâ(y,x) INT_MAX´øÀ´µÄÎŞ·ûºÅÊı½âÎöÎª-1µÄÎÊÌâ
+                                        G.Edge[x_pos][i] != INFINITYSIZE)
                               {
                                         printf("ÎŞÏò±ß(%c,%c)\n", x, G.Vex[i]);
                               }

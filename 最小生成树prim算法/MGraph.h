@@ -16,12 +16,20 @@
 #define DIRECTEDGRAPH 0x33    //有向图
 #define UNDIRECTEDGRAPH 0x44  //无向图
 
-/*图是否含有权重*/
+/*图是否含有权*/
 #define GRAPHWITHVALUE 0x55    //有权图
 #define NORMALGRAPH 0x66  //无权图
 
 /*边的默认大小设定*/
 #define Default_Vertices_Size 10        //默认的大小
+
+/*边的构造结构体*/
+typedef struct Pair           
+{
+          VertexType VexOne;  //顶点名称
+          VertexType VexTwo;  //顶点名称
+          int distance;                 //权
+}Pair;
 
 /*邻接矩阵数据结构*/
 typedef struct MGraph                      //邻接矩阵数据结构
